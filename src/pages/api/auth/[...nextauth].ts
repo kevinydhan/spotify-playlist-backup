@@ -1,6 +1,25 @@
 import type { NextApiHandler } from 'next'
-import WithAuth, { InitOptions, SessionBase } from 'next-auth'
+import WithAuth, { Callbacks, InitOptions, SessionBase } from 'next-auth'
 import Providers from 'next-auth/providers'
+
+import spotify from '@/controllers/spotify'
+
+export const refreshAccessToken = () => {
+  spotify.setClientId(process.env.SPOTIFY_CLIENT_ID)
+  spotify.setClientSecret(process.env.SPOTIFY_CLIENT_SECRET)
+  spotify.setAccessToken(account?.accessToken)
+  spotify.setRefreshToken(account?.refreshToken)
+}
+
+export const createSession: Callbacks['session'] = async (
+  session: SessionBase,
+  user
+) => ({
+  user: session.user,
+  accessToken: user?.accessToken,
+  refreshToken: user?.refreshToken,
+  expires: user?.expiresIn,
+})
 
 /**
  * __Issues:__
@@ -26,33 +45,39 @@ const options: InitOptions = {
       ].join(' '),
     }),
   ],
+
   jwt: {
     signingKey: process.env.JWT_SIGNING_KEY,
   },
+
   callbacks: {
-    jwt: async (token, _, account) => {
+    jwt: async (token, user, account) => {
       if (account) {
+        const expiryDate = Date.now() + account?.expires_in * 1000
+
         token.id = account?.id
         token.accessToken = account?.accessToken
         token.refreshToken = account?.refreshToken
-        token.expiresIn = new Date(
-          Date.now() + account?.expires_in * 1000
-        ).toISOString()
+        token.expiresIn = new Date(expiryDate).toISOString()
       }
+
+      const isTokenExpired = Date.now() > new Date(token.expiresIn).getTime()
+
+      if (isTokenExpired) {
+        spotify.setClientId(process.env.SPOTIFY_CLIENT_ID)
+        spotify.setClientSecret(process.env.SPOTIFY_CLIENT_SECRET)
+        spotify.setAccessToken(account?.accessToken)
+        spotify.setRefreshToken(account?.refreshToken)
+
+        const { body } = await spotify.refreshAccessToken()
+        token.accessToken = body.access_token
+      }
+
       return token
     },
-
-    /**
-     * Adds additional fields to the `Session` object.
-     */
-    session: async (session: SessionBase, user) => {
-      session.user.id = user?.id
-      session.accessToken = user?.accessToken
-      session.refreshToken = user?.refreshToken
-      session.expires = user?.expiresIn
-      return session
-    },
+    session: createSession,
   },
+  debug: true,
 }
 
 const handleAuthRequests: NextApiHandler = (req, res) => {

@@ -2,8 +2,8 @@ import 'next-auth'
 
 declare module 'next-auth' {
   export interface User {
-    id?: string
     sub?: string
+    id?: string
     accessToken?: string
     refreshToken?: string
     expiresIn?: string
