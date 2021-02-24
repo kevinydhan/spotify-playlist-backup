@@ -4,6 +4,14 @@
   "private": true,
   "author": "Kevin Han <kevinhanyd@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/kevinydhan/spotify-playlist-backup",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinydhan/spotify-playlist-backup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kevinydhan/spotify-playlist-backup/issues"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",
