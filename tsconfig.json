@@ -19,24 +19,13 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@/api/*": [
-        "pages/api/*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/controllers/*": [
-        "controllers/*"
-      ],
-      "@/middleware/*": [
-        "middleware/*"
-      ],
-      "@/theme/*": [
-        "theme/*"
-      ],
-      "@/typings/*": [
-        "typings/*"
-      ]
+      "@/api/*": ["pages/api/*"],
+      "@/components/*": ["components/*"],
+      "@/controllers/*": ["controllers/*"],
+      "@/middleware/*": ["middleware/*"],
+      "@/theme/*": ["theme/*"],
+      "@/typings/*": ["typings/*"],
+      "@/utils/*": ["utils/*"]
     }
   },
   "include": [

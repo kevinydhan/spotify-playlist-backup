@@ -13,5 +13,6 @@ module.exports = {
     '@/middleware/(.*)$': '<rootDir>/src/middleware/$1',
     '@/theme/(.*)$': '<rootDir>/src/theme/$1',
     '@/typings/(.*)$': '<rootDir>/src/typings/$1',
+    '@/utils/(.*)$': '<rootDir>/src/utils/$1',
   },
 }

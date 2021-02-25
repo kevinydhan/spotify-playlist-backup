@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 
 import spotify from '@/controllers/spotify'
 import { Badge, Box, Button } from '@/theme/components'
-import type { SpotifyPlaylistBackup } from '@/typings/spotify'
-interface PlaylistCardProps extends SpotifyApi.PlaylistObjectSimplified {
-  accessToken: string
-}
+import { downloadFile } from '@/utils/index'
 
-type GetPlaylistTrackUris = () => Promise<SpotifyApi.PlaylistTrackObject[]>
-type CreateBackupData = (
-  uris: SpotifyPlaylistBackup['uris']
-) => SpotifyPlaylistBackup
-type DownloadBackup = () => Promise<void>
-
+import type {
+  CreateBackupData,
+  DownloadBackup,
+  GetPlaylistTrackUris,
+  PlaylistCardProps,
+} from './PlaylistCard.d'
 class PlaylistCard extends Component<PlaylistCardProps> {
   static defaultProps = {
     buttonInnerText: 'Download backup file',
@@ -42,10 +39,10 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   createBackupData: CreateBackupData = (uris) => ({
-    name: this.props.name,
-    description: this.props.description,
-    public: this.props.public,
-    collaborative: this.props.collaborative,
+    name: this.props?.name ?? '',
+    description: this.props.description ?? '',
+    public: this.props.public ?? false,
+    collaborative: this.props.collaborative ?? false,
     createdAt: new Date().toISOString(),
     uris,
   })
@@ -57,18 +54,8 @@ class PlaylistCard extends Component<PlaylistCardProps> {
     const uris = await this.getPlaylistTrackUris()
     const playlistDetails = this.createBackupData(uris)
     const data = JSON.stringify(playlistDetails, null, 2)
-    const blob = new Blob([data], { type: 'text/json' })
-
-    if (window?.navigator?.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, 'playlist.json')
-    } else {
-      const elem = window.document.createElement('a')
-      elem.href = window.URL.createObjectURL(blob)
-      elem.download = 'playlist.json'
-      document.body.appendChild(elem)
-      elem.click()
-      document.body.removeChild(elem)
-    }
+    const blob = new Blob([data], { type: 'application/json' })
+    downloadFile(blob)
   }
 
   render: Component['render'] = () => (

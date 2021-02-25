@@ -1,3 +1,21 @@
+export type DownloadFile = (blob: Blob, fileName?: string) => void
+
+export const downloadFile: DownloadFile = (
+  blob,
+  fileName = 'playlist.json'
+) => {
+  if (window?.navigator?.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(blob, fileName)
+  } else {
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = fileName
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+}
+
 import type { DeepPartial } from '@/typings/utils'
 
 type CreateMockPlaylistCard = (

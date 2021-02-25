@@ -3,11 +3,9 @@ import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/react'
 import React from 'react'
 
+import { createMockPlaylist, createMockPlaylistImage } from '@/utils/index'
+
 import PlaylistCard from './PlaylistCard'
-import {
-  createMockPlaylist,
-  createMockPlaylistImage,
-} from './PlaylistCard.fixtures'
 
 test('it is defined', () => {
   expect(PlaylistCard).toBeDefined()
