@@ -32,7 +32,7 @@ export const Button = styled('button', {
   paddingX: 8,
   paddingY: 4,
   backgroundColor: 'transparent',
-  borderRadius: 16,
+  borderRadius: 8,
   appearance: 'none',
   cursor: 'pointer',
 })

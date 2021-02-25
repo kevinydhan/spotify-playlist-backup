@@ -42,12 +42,12 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   createBackupData: CreateBackupData = (uris) => ({
-    uris,
     name: this.props.name,
     description: this.props.description,
     public: this.props.public,
     collaborative: this.props.collaborative,
     createdAt: new Date().toISOString(),
+    uris,
   })
 
   /**

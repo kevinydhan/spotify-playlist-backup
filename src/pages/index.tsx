@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/client'
 
-import PlaylistCard from '@/components/PlaylistCard'
+import PlaylistCard from '@/components/PlaylistCard/PlaylistCard'
 import spotify from '@/controllers/spotify'
 import type { PageProps } from '@/typings/pages'
 
@@ -14,6 +14,17 @@ const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
   return (
     <div>
       <h1>Welcome, {session?.user?.name}!</h1>
+      <label htmlFor="playlist-backup-file-upload">
+        Create playlist from backup file
+        <input
+          type="file"
+          accept="application/JSON"
+          style={{ cursor: 'pointer' }}
+          onLoad={(event) => {
+            console.log(event)
+          }}
+        />
+      </label>
       <ul style={{ padding: 0 }}>
         {playlists.map((playlist) => (
           <PlaylistCard
