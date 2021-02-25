@@ -24,7 +24,14 @@ const AddNewPlaylist: FunctionComponent = () => {
     const reader = new FileReader()
 
     reader.addEventListener('load', async (event) => {
-      const data = JSON.parse(event.target.result as string)
+      const data = event.target.result
+      await fetch('/api/playlists', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     })
     reader.readAsText(files[0])
   }
