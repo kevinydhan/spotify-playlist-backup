@@ -18,7 +18,7 @@
     "start": "next start",
     "postinstall": "husky install",
     "lint": "eslint",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "jest",
     "test:watch": "jest --watchAll --maxWorkers=1"
   },
   "dependencies": {

@@ -94,11 +94,11 @@ class PlaylistCard extends Component<PlaylistCardProps> {
       </div>
       <div>
         <p style={{ margin: 0, marginBottom: '0.5em' }}>
-          <span>{this.props.name}</span>
+          <span>{this.props?.name}</span>
           <span> by </span>
-          <span>{this.props.owner.display_name}</span>
+          <span>{this.props?.owner?.display_name}</span>
         </p>
-        <Badge>{this.props.tracks.total} songs</Badge>
+        <Badge>{this.props?.tracks?.total} songs</Badge>
       </div>
       <Button onClick={this.downloadBackup}>
         {PlaylistCard.defaultProps.buttonInnerText}

@@ -60,7 +60,9 @@ export const createMockPlaylist: CreateMockPlaylistCard = ({
     spotify: external_urls?.spotify ?? '',
   },
 
-  images: images ?? [],
+  images: images?.length
+    ? images.map((image) => createMockPlaylistImage(image))
+    : [],
 })
 
 export const createMockPlaylistImage: CreateMockPlaylistImage = ({
