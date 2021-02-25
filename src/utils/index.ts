@@ -1,3 +1,5 @@
+import type { DeepPartial } from '@/typings/utils'
+
 export type DownloadFile = (blob: Blob, fileName?: string) => void
 
 export const downloadFile: DownloadFile = (
@@ -16,15 +18,9 @@ export const downloadFile: DownloadFile = (
   }
 }
 
-import type { DeepPartial } from '@/typings/utils'
-
-type CreateMockPlaylistCard = (
+export type CreateMockPlaylistCard = (
   options?: DeepPartial<SpotifyApi.PlaylistObjectSimplified>
 ) => SpotifyApi.PlaylistObjectSimplified
-
-type CreateMockPlaylistImage = (
-  options?: Partial<SpotifyApi.ImageObject>
-) => SpotifyApi.ImageObject
 
 /**
  * Creates a new `SpotifyApi.PlaylistObjectSimplified` object to be used for
@@ -82,6 +78,10 @@ export const createMockPlaylist: CreateMockPlaylistCard = ({
     ? images.map((image) => createMockPlaylistImage(image))
     : [],
 })
+
+export type CreateMockPlaylistImage = (
+  options?: Partial<SpotifyApi.ImageObject>
+) => SpotifyApi.ImageObject
 
 export const createMockPlaylistImage: CreateMockPlaylistImage = ({
   url,
