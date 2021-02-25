@@ -4,13 +4,6 @@ import Providers from 'next-auth/providers'
 
 import spotify from '@/controllers/spotify'
 
-export const refreshAccessToken = () => {
-  spotify.setClientId(process.env.SPOTIFY_CLIENT_ID)
-  spotify.setClientSecret(process.env.SPOTIFY_CLIENT_SECRET)
-  spotify.setAccessToken(account?.accessToken)
-  spotify.setRefreshToken(account?.refreshToken)
-}
-
 export const createSession: Callbacks['session'] = async (
   session: SessionBase,
   user

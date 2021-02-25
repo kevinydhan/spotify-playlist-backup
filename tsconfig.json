@@ -20,6 +20,7 @@
     "baseUrl": "src",
     "paths": {
       "@/api/*": ["pages/api/*"],
+      "@/components/*": ["components/*"],
       "@/controllers/*": ["controllers/*"],
       "@/middleware/*": ["middleware/*"],
       "@/typings/*": ["typings/*"],

@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/client'
 
+import PlaylistCard from '@/components/PlaylistCard/PlaylistCard'
 import spotify from '@/controllers/spotify'
 import type { PageProps } from '@/typings/pages'
 
@@ -69,24 +70,29 @@ const getPlaylistTrackUris = async ({
 const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
   if (!session) return <a href="/api/auth/signin">Log in to Spotify</a>
   return (
-    <div>
+    <div style={{ height: '300vh' }}>
       <h1>Welcome, {session?.user?.name}!</h1>
       <ul>
         {playlists.map((playlist) => (
-          <li key={playlist.id}>
-            {playlist.name}
-            <button
-              onClick={async () => {
-                const trackUris = await getPlaylistTrackUris({
-                  accessToken: session.accessToken,
-                  playlistId: playlist.id,
-                })
-                await downloadPlaylistBackup(playlist, trackUris)
-              }}
-            >
-              Download playlist
-            </button>
-          </li>
+          <PlaylistCard
+            key={playlist.id}
+            {...playlist}
+            accessToken={session?.accessToken}
+          />
+          // <li key={playlist.id}>
+          //   {playlist.name}
+          //   <button
+          //     onClick={async () => {
+          //       const trackUris = await getPlaylistTrackUris({
+          //         accessToken: session.accessToken,
+          //         playlistId: playlist.id,
+          //       })
+          //       await downloadPlaylistBackup(playlist, trackUris)
+          //     }}
+          //   >
+          //     Download playlist
+          //   </button>
+          // </li>
         ))}
       </ul>
     </div>
