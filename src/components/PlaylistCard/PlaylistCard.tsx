@@ -83,7 +83,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
       }}
     >
       <div>
-        {this.props.images.length && (
+        {this.props?.images?.length && (
           <img
             src={this.props.images[0].url}
             width={this.props.images[0].width}

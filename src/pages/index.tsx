@@ -11,6 +11,7 @@ interface IndexPageProps extends PageProps {
 
 const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
   if (!session) return <a href="/api/auth/signin">Log in to Spotify</a>
+  console.log(playlists[0])
   return (
     <div>
       <h1>Welcome, {session?.user?.name}!</h1>
