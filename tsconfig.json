@@ -23,6 +23,7 @@
       "@/components/*": ["components/*"],
       "@/controllers/*": ["controllers/*"],
       "@/middleware/*": ["middleware/*"],
+      "@/theme/*": ["theme/*"],
       "@/typings/*": ["typings/*"],
     }
   },

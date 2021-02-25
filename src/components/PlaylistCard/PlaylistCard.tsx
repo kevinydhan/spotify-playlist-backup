@@ -1,8 +1,8 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 
 import spotify from '@/controllers/spotify'
+import { Badge, Box, Button } from '@/theme/components'
 import type { SpotifyPlaylistBackup } from '@/typings/spotify'
-
 interface PlaylistCardProps extends SpotifyApi.PlaylistObjectSimplified {
   accessToken: string
 }
@@ -72,12 +72,24 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   render: Component['render'] = () => (
-    <li>
-      <span>{this.props.name}</span>
-      <button onClick={this.downloadBackup}>
+    <Box as="li">
+      {this.props.images.length && (
+        <img
+          src={this.props.images[0].url}
+          width={this.props.images[0].width}
+          width={this.props.images[0].height}
+        />
+      )}
+      <div>
+        <span>{this.props.name}</span>
+        <span> by </span>
+        <span>{this.props.owner.display_name}</span>
+      </div>
+      <Badge>{this.props.tracks.total} songs</Badge>
+      <Button onClick={this.downloadBackup}>
         {PlaylistCard.defaultProps.buttonInnerText}
-      </button>
-    </li>
+      </Button>
+    </Box>
   )
 }
 
