@@ -72,20 +72,34 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   render: Component['render'] = () => (
-    <Box as="li">
-      {this.props.images.length && (
-        <img
-          src={this.props.images[0].url}
-          width={this.props.images[0].width}
-          width={this.props.images[0].height}
-        />
-      )}
+    <Box
+      as="li"
+      css={{
+        display: 'grid',
+        gridTemplateColumns: '75px 1fr 200px',
+        columnGap: '16px',
+        alignItems: 'center',
+        maxWidth: 600,
+      }}
+    >
       <div>
-        <span>{this.props.name}</span>
-        <span> by </span>
-        <span>{this.props.owner.display_name}</span>
+        {this.props.images.length && (
+          <img
+            src={this.props.images[0].url}
+            width={this.props.images[0].width}
+            height={this.props.images[0].height}
+            style={{ maxWidth: 75, maxHeight: 75 }}
+          />
+        )}
       </div>
-      <Badge>{this.props.tracks.total} songs</Badge>
+      <div>
+        <p style={{ margin: 0, marginBottom: '0.5em' }}>
+          <span>{this.props.name}</span>
+          <span> by </span>
+          <span>{this.props.owner.display_name}</span>
+        </p>
+        <Badge>{this.props.tracks.total} songs</Badge>
+      </div>
       <Button onClick={this.downloadBackup}>
         {PlaylistCard.defaultProps.buttonInnerText}
       </Button>

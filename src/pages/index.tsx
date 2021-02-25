@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/client'
 
-import PlaylistCard from '@/components/PlaylistCard/PlaylistCard'
+import PlaylistCard from '@/components/PlaylistCard'
 import spotify from '@/controllers/spotify'
 import type { PageProps } from '@/typings/pages'
 
@@ -12,9 +12,9 @@ interface IndexPageProps extends PageProps {
 const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
   if (!session) return <a href="/api/auth/signin">Log in to Spotify</a>
   return (
-    <div style={{ height: '300vh' }}>
+    <div>
       <h1>Welcome, {session?.user?.name}!</h1>
-      <ul>
+      <ul style={{ padding: 0 }}>
         {playlists.map((playlist) => (
           <PlaylistCard
             key={playlist.id}
