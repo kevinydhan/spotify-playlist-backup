@@ -1,8 +1,21 @@
-type CreatePlaylistCardMockProps = (
-  options?: Partial<SpotifyApi.PlaylistObjectSimplified>
+import type { DeepPartial } from '@/typings/utils'
+
+type CreateMockPlaylistCard = (
+  options?: DeepPartial<SpotifyApi.PlaylistObjectSimplified>
 ) => SpotifyApi.PlaylistObjectSimplified
 
-export const createProps: CreatePlaylistCardMockProps = ({
+type CreateMockPlaylistImage = (
+  options?: Partial<SpotifyApi.ImageObject>
+) => SpotifyApi.ImageObject
+
+/**
+ * Creates a new `SpotifyApi.PlaylistObjectSimplified` object to be used for
+ * testing. If no options are passed, this function will provide default values
+ * for the required fields.
+ *
+ * @returns - Spotify playlist object
+ */
+export const createMockPlaylist: CreateMockPlaylistCard = ({
   id,
   name,
   description,
@@ -48,4 +61,14 @@ export const createProps: CreatePlaylistCardMockProps = ({
   },
 
   images: images ?? [],
+})
+
+export const createMockPlaylistImage: CreateMockPlaylistImage = ({
+  url,
+  width,
+  height,
+} = {}) => ({
+  url: url ?? '',
+  width: width ?? 0,
+  height: height ?? 0,
 })
