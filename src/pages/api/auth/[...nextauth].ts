@@ -70,7 +70,7 @@ const options: InitOptions = {
     },
     session: createSession,
   },
-  debug: true,
+  debug: process.env.NODE_ENV !== 'production',
 }
 
 const handleAuthRequests: NextApiHandler = (req, res) => {
