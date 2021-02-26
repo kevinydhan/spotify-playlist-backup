@@ -1,4 +1,4 @@
-import isValidSpotifyTrackUri from '../is-valid-spotify-track-uri'
+import isValidSpotifyTrackUri from './is-valid-spotify-track-uri'
 
 test('it is defined', () => {
   expect(isValidSpotifyTrackUri).toBeDefined()
