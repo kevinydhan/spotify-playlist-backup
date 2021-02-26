@@ -1,11 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { getSession, signIn } from 'next-auth/client'
+import { getSession } from 'next-auth/client'
 
 import { AddNewPlaylist, PlaylistCard } from '@/components/index'
 import spotify from '@/controllers/spotify'
-import type { PageProps } from '@/typings/pages'
+import type { CommonPageProps } from '@/typings/pages'
 
-interface DashboardPageProps extends PageProps {
+interface DashboardPageProps extends CommonPageProps {
   playlists: SpotifyApi.PlaylistObjectSimplified[]
 }
 

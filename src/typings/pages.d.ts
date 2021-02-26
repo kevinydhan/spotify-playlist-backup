@@ -5,5 +5,5 @@ import type { Session, SessionProvider } from 'next-auth/client'
  */
 export interface CommonPageProps {
   session?: Session
-  provider: SessionProvider
+  provider?: SessionProvider
 }
