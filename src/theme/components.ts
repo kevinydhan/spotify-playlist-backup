@@ -24,6 +24,14 @@ export const Header = styled('header', {
   paddingX: '$pageSideSpacing',
   backgroundColor: '$background',
   boxShadow: '$shadowPrimary',
+
+  variants: {
+    alignX: {
+      right: {
+        justifyContent: 'flex-end',
+      },
+    },
+  },
 })
 
 export const Heading = styled('h1', {})

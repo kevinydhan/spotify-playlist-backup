@@ -10,7 +10,7 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
   provider,
   session,
 }) => (
-  <Header css={styles.header}>
+  <Header alignX="right">
     {session && (
       <>
         <Text as="span" css={styles.welcomeText}>
@@ -19,9 +19,9 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
         <Button onClick={() => signOut()}>Log out</Button>
       </>
     )}
-    {!session && (
-      <Button onClick={() => signIn(provider.id)}>
-        Sign in with {provider.name}
+    {!session && provider && (
+      <Button onClick={() => signIn(provider?.id)}>
+        Sign in with {provider?.name}
       </Button>
     )}
   </Header>
