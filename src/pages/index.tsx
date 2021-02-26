@@ -15,11 +15,7 @@ interface IndexPageProps extends CommonPageProps {
   provider: SessionProvider
 }
 
-const IndexPage: NextPage<IndexPageProps> = ({
-  session,
-  playlists,
-  provider,
-}) => {
+const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
   if (!session) return <div>Join us!</div>
 
   return (

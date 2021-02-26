@@ -12,6 +12,17 @@ export const Box = styled('div', {
   },
 })
 
+export const Header = styled('header', {
+  position: 'fixed',
+  zIndex: 9999,
+  top: 0,
+  left: 0,
+  right: 0,
+  height: '$topNavigationHeight',
+  backgroundColor: '$background',
+  boxShadow: '$shadowPrimary',
+})
+
 export const Heading = styled('h1', {})
 
 export const Text = styled('p', {})

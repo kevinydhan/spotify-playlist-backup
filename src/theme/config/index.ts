@@ -1,20 +1,9 @@
 import { createStyled } from '@stitches/react'
 
+import tokens from './tokens'
+
 export const { styled, css } = createStyled({
-  tokens: {
-    colors: {
-      $background: '#ececec',
-    },
-    fonts: {
-      $primary: "'Noto Sans KR', sans-serif",
-    },
-    letterSpacings: {
-      $primary: '0.016em',
-    },
-  },
-
-  breakpoints: {},
-
+  tokens,
   utils: {
     /**
      * Applies left and right margin.

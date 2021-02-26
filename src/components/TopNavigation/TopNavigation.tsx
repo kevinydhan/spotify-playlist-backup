@@ -5,6 +5,8 @@ import {
   FunctionComponent,
 } from 'react'
 
+import { Header } from '@/theme/components'
+
 import { TopNavigationProps } from './TopNavigation.d'
 
 const TopNavigation: FunctionComponent<TopNavigationProps> = ({
@@ -26,7 +28,7 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
     )
   }
 
-  return <header>{button}</header>
+  return <Header>{button}</Header>
 }
 
 export default TopNavigation
