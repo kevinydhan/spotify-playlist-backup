@@ -2,6 +2,11 @@ image: node:latest
 
 stages:
   - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
 
 build:
   stage: build
@@ -12,3 +17,8 @@ build:
   artifacts:
     paths:
       - .next/
+
+test:
+  stage: test
+  script:
+    - yarn test
