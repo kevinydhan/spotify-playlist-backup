@@ -20,13 +20,8 @@ const IndexPage: NextPage<IndexPageProps> = ({
   playlists,
   provider,
 }) => {
-  if (!session)
-    // return <button onClick={() => signIn()}>Log in to Spotify</button>
-    return (
-      <button onClick={() => signIn(provider.id)}>
-        Sign in with {provider.name}
-      </button>
-    )
+  if (!session) return <div>Join us!</div>
+
   return (
     <div>
       <h1>Welcome, {session?.user?.name}!</h1>

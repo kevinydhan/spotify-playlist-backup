@@ -2,6 +2,7 @@ import type { NextComponentType, NextPage, NextPageContext } from 'next'
 import type { AppProps } from 'next/app'
 import { Provider as AuthProvider } from 'next-auth/client'
 
+import { TopNavigation } from '@/components/index'
 import type { CommonPageProps } from '@/typings/pages'
 
 interface ModifiedAppProps extends Omit<AppProps, 'Component' | 'pageProps'> {
@@ -15,6 +16,10 @@ interface ModifiedAppProps extends Omit<AppProps, 'Component' | 'pageProps'> {
 
 const App: NextPage<ModifiedAppProps> = ({ Component, pageProps }) => (
   <AuthProvider session={pageProps?.session}>
+    <TopNavigation
+      session={pageProps?.session}
+      provider={pageProps?.provider}
+    />
     <Component {...pageProps} />
   </AuthProvider>
 )
