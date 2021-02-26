@@ -1,4 +1,5 @@
 import { NextApiHandler, NextApiRequest } from 'next'
+import SpotifyWebApi from 'spotify-web-api-node'
 
 import spotify from '@/controllers/spotify'
 import { withAuthentication } from '@/middleware/with-authentication'
@@ -28,15 +29,25 @@ const handleRequest: NextApiHandler = async (
   switch (req?.method) {
     case 'POST':
       spotify.setAccessToken(req?.session?.accessToken)
+      let newPlaylist: SpotifyApi.CreatePlaylistResponse
 
       /**
-       * Spotify will proceed to create multiple playlists with same name.
+       * Spotify will proceed to create multiple playlists with same name, so a
+       * check to see whether or not a playlist with the same name already
+       * exists isn't needed.
        */
-      const newPlaylist = await spotify.createPlaylist(body?.name, {
-        description: body?.description,
-        public: body?.public,
-        collaborative: body?.collaborative,
-      })
+      try {
+        const res = await spotify.createPlaylist(body?.name, {
+          description: body?.description,
+          public: body?.public,
+          collaborative: body?.collaborative,
+        })
+        newPlaylist = res.body
+      } catch (err) {
+        const body = err?.body
+        const status = body?.error?.status || 400
+        return res.status(status).send(body)
+      }
 
       /**
        * Cases:
@@ -49,8 +60,6 @@ const handleRequest: NextApiHandler = async (
           return spotify.addTracksToPlaylist(newPlaylist.body.id, uris)
         })
       )
-
-      console.log(trackAdditionResponse)
 
       res.status(201).send({
         status: 201,

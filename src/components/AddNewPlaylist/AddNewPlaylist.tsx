@@ -27,10 +27,14 @@ const AddNewPlaylist: FunctionComponent = () => {
     event
   ) => {
     event.preventDefault()
+    console.log(newPlaylist)
     try {
       const response = await fetch('/api/playlists', {
         method: 'POST',
         body: newPlaylist,
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
       /**
        * @todo
