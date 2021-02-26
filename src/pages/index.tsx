@@ -1,10 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import {
-  getProviders,
-  getSession,
-  SessionProvider,
-  signIn,
-} from 'next-auth/client'
+import { getProviders, getSession } from 'next-auth/client'
 
 import { AddNewPlaylist, PlaylistCard } from '@/components/index'
 import spotify from '@/controllers/spotify'
@@ -12,7 +7,6 @@ import type { CommonPageProps } from '@/typings/pages'
 
 interface IndexPageProps extends CommonPageProps {
   playlists: SpotifyApi.PlaylistObjectSimplified[]
-  provider: SessionProvider
 }
 
 const IndexPage: NextPage<IndexPageProps> = ({ session, playlists }) => {
