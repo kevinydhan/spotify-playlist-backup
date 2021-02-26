@@ -8,9 +8,9 @@ import {
 
 import { AddNewPlaylist, PlaylistCard } from '@/components/index'
 import spotify from '@/controllers/spotify'
-import type { PageProps } from '@/typings/pages'
+import type { CommonPageProps } from '@/typings/pages'
 
-interface IndexPageProps extends PageProps {
+interface IndexPageProps extends CommonPageProps {
   playlists: SpotifyApi.PlaylistObjectSimplified[]
   provider: SessionProvider
 }
