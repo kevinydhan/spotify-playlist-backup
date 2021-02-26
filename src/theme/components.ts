@@ -34,5 +34,4 @@ export const Button = styled('button', {
   backgroundColor: 'transparent',
   borderRadius: 8,
   appearance: 'none',
-  cursor: 'pointer',
 })

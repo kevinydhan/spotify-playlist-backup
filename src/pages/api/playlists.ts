@@ -1,7 +1,8 @@
-import { NextApiHandler } from 'next'
+import { NextApiHandler, NextApiRequest } from 'next'
 
 import spotify from '@/controllers/spotify'
 import { withAuthentication } from '@/middleware/with-authentication'
+import { SpotifyPlaylistBackup } from '@/typings/spotify'
 
 type ArrayMember<T> = T extends Array<infer Member> ? Member : T
 
@@ -18,7 +19,10 @@ const chunkArray = (
   return result
 }
 
-const handleRequest: NextApiHandler = async (req, res) => {
+const handleRequest: NextApiHandler = async (
+  req: NextApiRequest & { body?: Partial<SpotifyPlaylistBackup> },
+  res
+) => {
   const body = req?.body
 
   switch (req?.method) {
@@ -26,8 +30,7 @@ const handleRequest: NextApiHandler = async (req, res) => {
       spotify.setAccessToken(req?.session?.accessToken)
 
       /**
-       * Cases:
-       * 1. Playlist with same name already exists.
+       * Spotify will proceed to create multiple playlists with same name.
        */
       const newPlaylist = await spotify.createPlaylist(body?.name, {
         description: body?.description,

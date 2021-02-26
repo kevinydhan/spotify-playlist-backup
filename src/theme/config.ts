@@ -65,4 +65,8 @@ css.global({
   button: {
     fontFamily: '$primary',
   },
+
+  'button, input[type="file"]': {
+    cursor: 'pointer',
+  },
 })

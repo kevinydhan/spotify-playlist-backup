@@ -10,6 +10,7 @@ import type {
   GetPlaylistTrackUris,
   PlaylistCardProps,
 } from './PlaylistCard.d'
+
 class PlaylistCard extends Component<PlaylistCardProps> {
   static defaultProps = {
     buttonInnerText: 'Download backup file',
