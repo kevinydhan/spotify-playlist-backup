@@ -36,6 +36,10 @@ const AddNewPlaylist: FunctionComponent = () => {
           'Content-Type': 'application/json',
         },
       })
+      if (response.status === 201) {
+        // clear input
+        if (inputRef.current?.value) inputRef.current.value = ''
+      }
       /**
        * @todo
        * - Do something with successful response

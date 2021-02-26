@@ -72,7 +72,6 @@ const handleRequest: NextApiHandler = async (
         const status = body?.error?.status || 400
         return res.status(status).send(body)
       }
-      break
 
     default:
       res.status(405).send({
