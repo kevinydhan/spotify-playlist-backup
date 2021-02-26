@@ -1,5 +1,4 @@
 import { NextApiHandler, NextApiRequest } from 'next'
-import SpotifyWebApi from 'spotify-web-api-node'
 
 import spotify from '@/controllers/spotify'
 import { withAuthentication } from '@/middleware/with-authentication'
@@ -29,6 +28,7 @@ const handleRequest: NextApiHandler = async (
   switch (req?.method) {
     case 'POST':
       spotify.setAccessToken(req?.session?.accessToken)
+
       let newPlaylist: SpotifyApi.CreatePlaylistResponse
 
       /**
@@ -37,12 +37,12 @@ const handleRequest: NextApiHandler = async (
        * exists isn't needed.
        */
       try {
-        const res = await spotify.createPlaylist(body?.name, {
+        const response = await spotify.createPlaylist(body?.name, {
           description: body?.description,
           public: body?.public,
           collaborative: body?.collaborative,
         })
-        newPlaylist = res.body
+        newPlaylist = response.body
       } catch (err) {
         const body = err?.body
         const status = body?.error?.status || 400
@@ -54,17 +54,24 @@ const handleRequest: NextApiHandler = async (
        * 1. The number of track uris is greater than 100.
        * 2. One or more track uris are invalid.
        */
-      const chunkedUris = chunkArray(body.uris as string[])
-      const trackAdditionResponse = await Promise.all(
-        chunkedUris.map((uris) => {
-          return spotify.addTracksToPlaylist(newPlaylist.body.id, uris)
-        })
-      )
+      const chunkedUris: string[][] = chunkArray(body?.uris)
 
-      res.status(201).send({
-        status: 201,
-        message: 'Created new playlist',
-      })
+      try {
+        const requests = chunkedUris.map((uris) => {
+          return spotify.addTracksToPlaylist(newPlaylist?.id, uris)
+        })
+
+        await Promise.all(requests)
+
+        return res.status(201).send({
+          status: 201,
+          message: 'Created new playlist',
+        })
+      } catch (err) {
+        const body = err?.body
+        const status = body?.error?.status || 400
+        return res.status(status).send(body)
+      }
       break
 
     default:
