@@ -1,4 +1,6 @@
-const tokens = {
+import type { ITokensDefinition } from '@stitches/core'
+
+const tokens: ITokensDefinition = {
   colors: {
     $white: '#e4e5eb',
     $blue300: '#1282a2',
@@ -32,7 +34,11 @@ const tokens = {
     /**
      * Token values can't be numbers.
      */
-    $topNavigationHeight: '72px',
+    $topNavigationHeight: '60px',
+  },
+
+  space: {
+    $pageSideSpacing: '16px',
   },
 }
 

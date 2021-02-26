@@ -18,7 +18,10 @@ export const Header = styled('header', {
   top: 0,
   left: 0,
   right: 0,
+  display: 'flex',
+  alignItems: 'center',
   height: '$topNavigationHeight',
+  paddingX: '$pageSideSpacing',
   backgroundColor: '$background',
   boxShadow: '$shadowPrimary',
 })
@@ -40,9 +43,12 @@ export const Badge = styled('span', {
 export const Button = styled('button', {
   fontSize: 14,
   lineHeight: 1,
-  paddingX: 8,
-  paddingY: 4,
-  backgroundColor: 'transparent',
-  borderRadius: 8,
+  paddingX: 12,
+  paddingY: 10,
+  backgroundColor: '$secondary',
+  color: '$white',
+  border: 'none',
+  borderRadius: 6,
   appearance: 'none',
+  boxShadow: '$shadowPrimary',
 })
