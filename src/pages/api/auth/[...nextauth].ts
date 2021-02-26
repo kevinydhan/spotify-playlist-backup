@@ -43,6 +43,10 @@ const options: InitOptions = {
     signingKey: process.env.JWT_SIGNING_KEY,
   },
 
+  pages: {
+    signIn: '/login',
+  },
+
   callbacks: {
     jwt: async (token, user, account) => {
       if (account) {
@@ -70,6 +74,7 @@ const options: InitOptions = {
     },
     session: createSession,
   },
+
   debug: process.env.NODE_ENV !== 'production',
 }
 
