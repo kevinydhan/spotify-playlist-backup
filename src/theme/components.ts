@@ -53,7 +53,7 @@ export const Button = styled('button', {
   lineHeight: 1,
   paddingX: 12,
   paddingY: 10,
-  backgroundColor: '$secondary',
+  backgroundColor: '$primary',
   color: '$white',
   border: 'none',
   borderRadius: 6,
