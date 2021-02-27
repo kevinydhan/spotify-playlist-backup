@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { getProviders } from 'next-auth/client'
 
-import { AddNewPlaylist, PlaylistCard } from '@/components/index'
 import type { CommonPageProps } from '@/typings/pages'
 
 type IndexPageProps = CommonPageProps
