@@ -20,7 +20,9 @@ const App: NextPage<ModifiedAppProps> = ({ Component, pageProps }) => (
       session={pageProps?.session}
       provider={pageProps?.provider}
     />
-    <Component {...pageProps} />
+    <main>
+      <Component {...pageProps} />
+    </main>
   </AuthProvider>
 )
 
