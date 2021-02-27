@@ -6,7 +6,7 @@ const tokens: ITokensDefinition = {
     $primary: '#161d6f',
     $background: '#f6f6f6',
 
-    $shadowPrimary: '0.125rem 0.125rem 0.5rem 0.25rem rgba(0, 0, 0, 0.05)',
+    $boxShadowPrimary: '0.125rem 0.125rem 0.5rem 0.25rem rgba(0, 0, 0, 0.05)',
   },
 
   /**

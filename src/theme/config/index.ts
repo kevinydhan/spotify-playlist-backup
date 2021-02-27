@@ -1,9 +1,11 @@
 import { createStyled } from '@stitches/react'
 
+import breakpoints from './breakpoints'
 import tokens from './tokens'
 
 export const { styled, css } = createStyled({
   tokens,
+  breakpoints,
   utils: {
     /**
      * Applies left and right margin.

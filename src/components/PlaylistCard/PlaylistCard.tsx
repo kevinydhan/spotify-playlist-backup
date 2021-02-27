@@ -10,6 +10,7 @@ import type {
   GetPlaylistTrackUris,
   PlaylistCardProps,
 } from './PlaylistCard.d'
+import * as styles from './PlaylistCard.styles'
 
 class PlaylistCard extends Component<PlaylistCardProps> {
   static defaultProps = {
@@ -60,16 +61,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   render: Component['render'] = () => (
-    <Box
-      as="li"
-      css={{
-        display: 'grid',
-        gridTemplateColumns: '75px 1fr 200px',
-        columnGap: '16px',
-        alignItems: 'center',
-        maxWidth: 600,
-      }}
-    >
+    <Box as="li" css={styles.root}>
       <div>
         {this.props?.images?.length && (
           <img

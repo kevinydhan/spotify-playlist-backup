@@ -1,16 +1,6 @@
 import { styled } from '@/theme/config'
 
-export const Box = styled('div', {
-  padding: 20,
-  listStyle: 'none',
-  borderRadius: 16,
-  boxShadow: '0.125rem 0.125rem 0.5rem 0.25rem rgba(0, 0, 0, 0.0325)',
-  backgroundColor: 'white',
-
-  '& + &': {
-    marginTop: 16,
-  },
-})
+export const Box = styled('div', {})
 
 export const Header = styled('header', {
   position: 'fixed',
@@ -23,7 +13,7 @@ export const Header = styled('header', {
   height: '$topNavigationHeight',
   paddingX: '$pageSideSpacing',
   backgroundColor: '$background',
-  boxShadow: '$shadowPrimary',
+  boxShadow: '$boxShadowPrimary',
 
   variants: {
     alignX: {
