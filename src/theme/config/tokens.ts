@@ -30,6 +30,7 @@ const tokens: ITokensDefinition = {
   },
 
   space: {
+    $pageTopPadding: '60px',
     $pageSideSpacing: '16px',
   },
 }

@@ -51,6 +51,10 @@ css.global({
     backgroundColor: '$background',
   },
 
+  main: {
+    paddingTop: '$pageTopPadding',
+  },
+
   button: {
     fontFamily: '$primary',
   },
