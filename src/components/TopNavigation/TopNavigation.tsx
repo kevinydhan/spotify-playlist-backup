@@ -16,11 +16,21 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
         <Text as="span" css={styles.welcomeText}>
           Welcome, {session?.user?.name}!
         </Text>
-        <Button onClick={() => signOut()}>Log out</Button>
+        <Button
+          onClick={() => signOut({ callbackUrl: window?.location?.origin })}
+        >
+          Log out
+        </Button>
       </>
     )}
     {!session && provider && (
-      <Button onClick={() => signIn(provider?.id)}>
+      <Button
+        onClick={() =>
+          signIn(provider?.id, {
+            callbackUrl: `${window?.location?.origin}/dashboard`,
+          })
+        }
+      >
         Sign in with {provider?.name}
       </Button>
     )}
