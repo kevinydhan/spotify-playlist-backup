@@ -14,5 +14,6 @@ module.exports = {
     '@/theme/(.*)$': '<rootDir>/src/theme/$1',
     '@/typings/(.*)$': '<rootDir>/src/typings/$1',
     '@/utils/(.*)$': '<rootDir>/src/utils/$1',
+    '\\.(css|scss)$': 'identity-obj-proxy',
   },
 }
