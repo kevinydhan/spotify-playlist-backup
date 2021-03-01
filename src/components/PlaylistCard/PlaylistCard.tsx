@@ -3,12 +3,14 @@ import React, { Component } from 'react'
 import spotify from '@/controllers/spotify'
 import { downloadFile } from '@/utils/index'
 
+import buttonStyles from '../../styles/components/button.module.scss'
 import type {
   CreateBackupData,
   DownloadBackup,
   GetPlaylistTrackUris,
   PlaylistCardProps,
 } from './PlaylistCard.d'
+import styles from './PlaylistCard.module.scss'
 
 class PlaylistCard extends Component<PlaylistCardProps> {
   static defaultProps = {
@@ -59,7 +61,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   render: Component['render'] = () => (
-    <li>
+    <li className={styles.root}>
       <div>
         {this.props?.images?.length && (
           <img
@@ -78,7 +80,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
         </p>
         <span>{this.props?.tracks?.total} songs</span>
       </div>
-      <button onClick={this.downloadBackup}>
+      <button className={buttonStyles.button} onClick={this.downloadBackup}>
         {PlaylistCard.defaultProps.buttonInnerText}
       </button>
     </li>

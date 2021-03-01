@@ -21,7 +21,9 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
     <div className={navigationStyles['inner-container']}>
       {session && (
         <>
-          <span>Welcome, {session?.user?.name}!</span>
+          <span className={navigationStyles['welcome-text']}>
+            Welcome, {session?.user?.name}!
+          </span>
           <button
             className={buttonStyles.button}
             onClick={handleSignInButtonClick}

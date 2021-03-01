@@ -5,6 +5,8 @@ import { AddNewPlaylist, PlaylistCard } from '@/components/index'
 import spotify from '@/controllers/spotify'
 import type { CommonPageProps } from '@/typings/pages'
 
+import pageStyles from '../styles/pages/dashboard.module.scss'
+
 interface DashboardPageProps extends CommonPageProps {
   playlists: SpotifyApi.PlaylistObjectSimplified[]
 }
@@ -12,23 +14,21 @@ interface DashboardPageProps extends CommonPageProps {
 const DashboardPage: NextPage<DashboardPageProps> = ({
   session,
   playlists,
-}) => {
-  return (
-    <div>
-      <h1>Welcome, {session?.user?.name}!</h1>
-      <AddNewPlaylist />
-      <ul style={{ padding: 0 }}>
-        {playlists.map((playlist) => (
-          <PlaylistCard
-            key={playlist.id}
-            {...playlist}
-            accessToken={session?.accessToken}
-          />
-        ))}
-      </ul>
-    </div>
-  )
-}
+}) => (
+  <div>
+    <h1 className={pageStyles.heading}>Welcome, {session?.user?.name}!</h1>
+    <AddNewPlaylist />
+    <ul style={{ padding: 0 }}>
+      {playlists.map((playlist) => (
+        <PlaylistCard
+          key={playlist.id}
+          {...playlist}
+          accessToken={session?.accessToken}
+        />
+      ))}
+    </ul>
+  </div>
+)
 
 export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async (
   context
