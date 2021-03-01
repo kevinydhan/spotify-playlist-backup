@@ -8,10 +8,14 @@ html {
 body {
   margin: 0 16px;
   background-color: $color-background;
+
+  @media screen and (min-width: 768px) {
+    margin: 0 32px;
+  }
 }
 
 main {
-  padding-top: 16px;
+  padding-top: 80px;
 }
 
 button {
