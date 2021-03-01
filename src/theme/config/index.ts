@@ -40,28 +40,3 @@ export const { styled, css } = createStyled({
     }),
   },
 })
-
-css.global({
-  html: {
-    fontFamily: '$primary',
-    letterSpacing: '$primary',
-  },
-
-  body: {
-    marginX: 16,
-    marginY: 0,
-    backgroundColor: '$background',
-  },
-
-  main: {
-    paddingTop: '$pageTopPadding',
-  },
-
-  button: {
-    fontFamily: '$primary',
-  },
-
-  'button, input[type="file"]': {
-    cursor: 'pointer',
-  },
-})

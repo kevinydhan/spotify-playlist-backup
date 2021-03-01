@@ -1,0 +1,24 @@
+@use './abstracts' as *;
+
+html {
+  font-family: $font-family-primary;
+  letter-spacing: $letter-spacing-primary;
+}
+
+body {
+  margin: 0 16px;
+  background-color: $color-background;
+}
+
+main {
+  padding-top: 16px;
+}
+
+button {
+  font-family: $font-family-primary;
+}
+
+button,
+input[type='file'] {
+  cursor: pointer;
+}

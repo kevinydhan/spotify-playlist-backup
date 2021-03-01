@@ -1,10 +1,11 @@
+import '../styles/global.scss'
+
 import type { NextComponentType, NextPage, NextPageContext } from 'next'
 import type { AppProps } from 'next/app'
 import { Provider as AuthProvider } from 'next-auth/client'
 
 import { TopNavigation } from '@/components/index'
 import type { CommonPageProps } from '@/typings/pages'
-
 interface ModifiedAppProps extends Omit<AppProps, 'Component' | 'pageProps'> {
   pageProps: CommonPageProps
   Component: NextComponentType<
