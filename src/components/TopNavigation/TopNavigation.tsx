@@ -18,25 +18,27 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
   session,
 }) => (
   <header className={navigationStyles.header}>
-    {session && (
-      <>
-        <span>Welcome, {session?.user?.name}!</span>
+    <div className={navigationStyles['inner-container']}>
+      {session && (
+        <>
+          <span>Welcome, {session?.user?.name}!</span>
+          <button
+            className={buttonStyles.button}
+            onClick={handleSignInButtonClick}
+          >
+            Log out
+          </button>
+        </>
+      )}
+      {!session && provider && (
         <button
           className={buttonStyles.button}
-          onClick={handleSignInButtonClick}
+          onClick={handleSignOutButtonClick(provider?.id)}
         >
-          Log out
+          Sign in with {provider?.name}
         </button>
-      </>
-    )}
-    {!session && provider && (
-      <button
-        className={buttonStyles.button}
-        onClick={handleSignOutButtonClick(provider?.id)}
-      >
-        Sign in with {provider?.name}
-      </button>
-    )}
+      )}
+    </div>
   </header>
 )
 
