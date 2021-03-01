@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import spotify from '@/controllers/spotify'
-import { Badge, Box, Button } from '@/theme/components'
 import { downloadFile } from '@/utils/index'
 
 import type {
@@ -10,7 +9,6 @@ import type {
   GetPlaylistTrackUris,
   PlaylistCardProps,
 } from './PlaylistCard.d'
-import * as styles from './PlaylistCard.styles'
 
 class PlaylistCard extends Component<PlaylistCardProps> {
   static defaultProps = {
@@ -61,7 +59,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
   }
 
   render: Component['render'] = () => (
-    <Box as="li" css={styles.root}>
+    <li>
       <div>
         {this.props?.images?.length && (
           <img
@@ -78,12 +76,12 @@ class PlaylistCard extends Component<PlaylistCardProps> {
           <span> by </span>
           <span>{this.props?.owner?.display_name}</span>
         </p>
-        <Badge>{this.props?.tracks?.total} songs</Badge>
+        <span>{this.props?.tracks?.total} songs</span>
       </div>
-      <Button onClick={this.downloadBackup}>
+      <button onClick={this.downloadBackup}>
         {PlaylistCard.defaultProps.buttonInnerText}
-      </Button>
-    </Box>
+      </button>
+    </li>
   )
 }
 
