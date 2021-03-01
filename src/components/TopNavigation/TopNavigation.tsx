@@ -1,8 +1,8 @@
 import { SessionProvider, signIn, signOut } from 'next-auth/client'
 import { FunctionComponent } from 'react'
 
-import buttonStyles from '../../styles/components/_button.module.scss'
-import navigationStyles from '../../styles/components/_navigation.module.scss'
+import buttonStyles from '../../styles/components/button.module.scss'
+import navigationStyles from '../../styles/components/navigation.module.scss'
 import { TopNavigationProps } from './TopNavigation.d'
 
 /**

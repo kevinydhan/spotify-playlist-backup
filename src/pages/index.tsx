@@ -4,7 +4,7 @@ import { getProviders, SessionProvider, signIn } from 'next-auth/client'
 
 import type { CommonPageProps } from '@/typings/pages'
 
-import buttonStyles from '../styles/components/_button.module.scss'
+import buttonStyles from '../styles/components/button.module.scss'
 import pageStyles from '../styles/pages/home.module.scss'
 
 type IndexPageProps = CommonPageProps
