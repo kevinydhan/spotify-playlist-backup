@@ -1,6 +1,6 @@
-@use '../abstracts' as *;
+@use '../../styles/abstracts' as *;
 
-.header {
+.root {
   position: fixed;
   z-index: 9999;
   top: 0;

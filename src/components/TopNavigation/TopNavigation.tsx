@@ -2,8 +2,8 @@ import { SessionProvider, signIn, signOut } from 'next-auth/client'
 import { FunctionComponent } from 'react'
 
 import buttonStyles from '../../styles/components/button.module.scss'
-import navigationStyles from '../../styles/components/navigation.module.scss'
 import { TopNavigationProps } from './TopNavigation.d'
+import styles from './TopNavigation.module.scss'
 
 /**
  * @todo
@@ -17,11 +17,11 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({
   provider,
   session,
 }) => (
-  <header className={navigationStyles.header}>
-    <div className={navigationStyles['inner-container']}>
+  <header className={styles.root}>
+    <div className={styles['inner-container']}>
       {session && (
         <>
-          <span className={navigationStyles['welcome-text']}>
+          <span className={styles['welcome-text']}>
             Welcome, {session?.user?.name}!
           </span>
           <button
