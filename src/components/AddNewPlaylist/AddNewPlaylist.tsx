@@ -7,9 +7,10 @@ import {
   useState,
 } from 'react'
 
-type GetFileText = (fileList: FileList) => Promise<string>
+import getFileText from '@/utils/get-file-text/get-file-text'
 
 type HandleFileInputChange = InputHTMLAttributes<HTMLInputElement>['onChange']
+
 type HandleSubmit = DOMAttributes<HTMLFormElement>['onSubmit']
 
 const AddNewPlaylist: FunctionComponent = () => {
@@ -70,18 +71,6 @@ const AddNewPlaylist: FunctionComponent = () => {
       <button type="submit">Create playlist</button>
     </form>
   )
-}
-
-const getFileText: GetFileText = (fileList) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-
-    reader.addEventListener('load', ({ target }) => {
-      resolve(target.result.toString())
-    })
-    reader.addEventListener('error', reject)
-    reader.readAsText(fileList[0])
-  })
 }
 
 export default AddNewPlaylist
