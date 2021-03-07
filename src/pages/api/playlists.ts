@@ -1,26 +1,25 @@
-import { NextApiHandler, NextApiRequest } from 'next'
+import {
+  AuthenticatedNextApiHandler,
+  NextApiHandler,
+  NextApiRequest,
+  NextApiRequestWithSession,
+  NextApiResponse,
+} from 'next'
 
 import spotify from '@/controllers/spotify'
 import { withAuthentication } from '@/middleware/with-authentication'
-import { SpotifyPlaylistBackup } from '@/typings/spotify'
+import type { SpotifyPlaylistBackup } from '@/typings/spotify'
+import chunkArray from '@/utils/chunk-array/chunk-array'
 
-type ArrayMember<T> = T extends Array<infer Member> ? Member : T
-
-const chunkArray = (
-  arr: Array<unknown>,
-  chunkSize = 100
-): ArrayMember<Parameters<typeof chunkArray>[0]>[][] => {
-  const result = []
-
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    result.push(arr.slice(i, i + chunkSize))
-  }
-
-  return result
+/**
+ * This interface defines the expected request object for `/api/playlists`.
+ */
+interface ModifiedNextApiRequest extends Omit<NextApiRequest, 'body'> {
+  body?: Partial<SpotifyPlaylistBackup>
 }
 
 const handleRequest: NextApiHandler = async (
-  req: NextApiRequest & { body?: Partial<SpotifyPlaylistBackup> },
+  req: ModifiedNextApiRequest,
   res
 ) => {
   const body = req?.body
@@ -54,7 +53,7 @@ const handleRequest: NextApiHandler = async (
        * 1. The number of track uris is greater than 100.
        * 2. One or more track uris are invalid.
        */
-      const chunkedUris: string[][] = chunkArray(body?.uris)
+      const chunkedUris = chunkArray(body?.uris)
 
       try {
         const requests = chunkedUris.map((uris) => {
@@ -80,6 +79,77 @@ const handleRequest: NextApiHandler = async (
           message: `${req.method} method not allowed`,
         },
       })
+  }
+}
+
+type IsAllowedHttpMethod = (method: NextApiRequest['method']) => boolean
+
+interface SendErrorOptions {
+  status?: number
+  message: string
+}
+
+type SendError = <GenericResponse extends NextApiResponse>(
+  res: GenericResponse,
+  options?: SendErrorOptions
+) => void
+
+type CreateNewSpotifyPlaylist = (
+  req: NextApiRequestWithSession
+) => Promise<SpotifyApi.CreatePlaylistResponse>
+
+export class PlaylistsApiEndpoint {
+  isAllowedHttpMethod: IsAllowedHttpMethod = (method) => {
+    return method.toLowerCase() in this
+  }
+
+  sendError: SendError = (res, options) => {
+    const status = options?.status || 500
+    const message = options?.message
+
+    res.status(status).send({
+      error: { status, message },
+    })
+  }
+
+  handleRequest: NextApiHandler = (req, res) => {
+    if (!this.isAllowedHttpMethod(req?.method)) {
+      return this.sendError(res, {
+        status: 405,
+        message: `${req?.method} method not allowed`,
+      })
+    }
+
+    const next = this[req.method.toLowerCase()]
+    next(req, res)
+  }
+
+  post: AuthenticatedNextApiHandler = (req, res) => {
+    // validate req.body
+    const newPlaylist = this.createNewSpotifyPlaylist(req.body)
+    res.send(newPlaylist)
+  }
+
+  /**
+   * Spotify will proceed to create multiple playlists with same name, so a
+   * check to see whether or not a playlist with the same name already
+   * exists isn't needed.
+   */
+  createNewSpotifyPlaylist: CreateNewSpotifyPlaylist = async (req) => {
+    spotify.setAccessToken(req?.session?.accessToken)
+    const { name, description, collaborative } = req.body
+
+    try {
+      const response = await spotify.createPlaylist(name, {
+        description,
+        collaborative,
+        public: req.body.public,
+      })
+
+      return response.body
+    } catch (err) {
+      return err
+    }
   }
 }
 
