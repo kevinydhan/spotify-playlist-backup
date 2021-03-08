@@ -1,4 +1,8 @@
-import type { AuthenticatedNextApiHandler, NextApiHandler } from 'next'
+import type {
+  AuthenticatedNextApiHandler,
+  NextApiHandler,
+  NextApiRequestWithSession,
+} from 'next'
 import { getSession } from 'next-auth/client'
 
 type WithAuthentication = (
@@ -10,8 +14,9 @@ export const withAuthentication: WithAuthentication = (requestHandler) => {
     const session = await getSession({ req })
 
     if (session) {
-      req.session = session
-      requestHandler(req, res)
+      const authenticatedReq = req as NextApiRequestWithSession
+      authenticatedReq.session = session
+      requestHandler(authenticatedReq, res)
     } else {
       res.status(401).send({
         error: {
