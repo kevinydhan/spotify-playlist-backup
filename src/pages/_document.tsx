@@ -19,7 +19,7 @@ class MyDocument extends Document {
   }
 
   render: Render = () => (
-    <Html>
+    <Html lang="en">
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
