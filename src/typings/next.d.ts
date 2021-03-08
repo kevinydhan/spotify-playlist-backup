@@ -1,6 +1,7 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import type { Session } from 'next-auth/client'
 
+import type { SpotifyPlaylistBackup } from './spotify'
 import type { Modify } from './utils'
 
 declare module 'next' {
@@ -40,4 +41,9 @@ declare module 'next' {
     req: Modify<NextApiRequestWithSession, RequestModifiers>,
     res: NextApiResponse<SuccessResponse | ErrorResponse>
   ) => ReturnType<NextApiHandler>
+
+  export interface PlaylistValidationError {
+    field: keyof SpotifyPlaylistBackup
+    message: string
+  }
 }

@@ -4,6 +4,7 @@ import spotify from '@/controllers/spotify'
 import { withAuthentication } from '@/middleware/with-authentication'
 import type { SpotifyPlaylistBackup } from '@/typings/spotify'
 import chunkArray from '@/utils/chunk-array/chunk-array'
+import validateNewPlaylistFields from '@/utils/validate-new-playlist-fields/validate-new-playlist-fields'
 
 interface RequestModifiers {
   body?: Partial<SpotifyPlaylistBackup>
@@ -12,42 +13,6 @@ interface RequestModifiers {
 interface SuccessResponse {
   status: number
   message: string
-}
-
-interface PlaylistValidationError {
-  field: keyof SpotifyPlaylistBackup
-  message: string
-}
-
-type ValidateNewPlaylistFields = (
-  body: RequestModifiers['body']
-) => PlaylistValidationError[]
-
-const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
-  const errors = []
-
-  if (!body?.name) {
-    errors.push({
-      field: 'name',
-      message: 'Playlist name is missing.',
-    })
-  }
-
-  if (typeof body?.public !== 'boolean') {
-    errors.push({
-      field: 'public',
-      message: 'This field must either be true or false.',
-    })
-  }
-
-  if (typeof body?.collaborative !== 'boolean') {
-    errors.push({
-      field: 'collaborative',
-      message: 'This field must either be true or false.',
-    })
-  }
-
-  return errors
 }
 
 const handleRequest: AuthenticatedNextApiHandler<
