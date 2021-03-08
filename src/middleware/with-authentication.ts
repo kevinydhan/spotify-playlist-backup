@@ -1,7 +1,9 @@
-import type { NextApiHandler } from 'next'
+import type { AuthenticatedNextApiHandler, NextApiHandler } from 'next'
 import { getSession } from 'next-auth/client'
 
-type WithAuthentication = (requestHandler: NextApiHandler) => NextApiHandler
+type WithAuthentication = (
+  requestHandler: AuthenticatedNextApiHandler
+) => NextApiHandler
 
 export const withAuthentication: WithAuthentication = (requestHandler) => {
   return async (req, res) => {
