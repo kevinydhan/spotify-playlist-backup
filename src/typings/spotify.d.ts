@@ -3,6 +3,6 @@ export interface SpotifyPlaylistBackup {
   description: SpotifyApi.PlaylistObjectSimplified['description']
   public: SpotifyApi.PlaylistObjectSimplified['public']
   collaborative: SpotifyApi.PlaylistObjectSimplified['collaborative']
-  uris: SpotifyApi.PlaylistTrackObject[]
+  uris: SpotifyApi.PlaylistObjectSimplified['uri'][]
   createdAt: string
 }

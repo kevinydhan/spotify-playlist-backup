@@ -15,7 +15,12 @@ declare module 'next' {
   export interface ErrorResponse {
     error: {
       status: number
-      message: string
+      message?: string
+      /**
+       * References a list of errors, usually in response to an invalid form
+       * submission.
+       */
+      items?: unknown[]
     }
   }
 

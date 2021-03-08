@@ -14,6 +14,42 @@ interface SuccessResponse {
   message: string
 }
 
+interface PlaylistValidationError {
+  field: keyof SpotifyPlaylistBackup
+  message: string
+}
+
+type ValidateNewPlaylistFields = (
+  body: RequestModifiers['body']
+) => PlaylistValidationError[]
+
+const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
+  const errors = []
+
+  if (!body?.name) {
+    errors.push({
+      field: 'name',
+      message: 'Playlist name is missing.',
+    })
+  }
+
+  if (typeof body?.public !== 'boolean') {
+    errors.push({
+      field: 'public',
+      message: 'This field must either be true or false.',
+    })
+  }
+
+  if (typeof body?.collaborative !== 'boolean') {
+    errors.push({
+      field: 'collaborative',
+      message: 'This field must either be true or false.',
+    })
+  }
+
+  return errors
+}
+
 const handleRequest: AuthenticatedNextApiHandler<
   RequestModifiers,
   SuccessResponse
@@ -22,6 +58,16 @@ const handleRequest: AuthenticatedNextApiHandler<
 
   switch (method) {
     case 'POST':
+      const errors = validateNewPlaylistFields(body)
+      if (errors.length) {
+        return res.status(422).send({
+          error: {
+            status: 422,
+            items: errors,
+          },
+        })
+      }
+
       spotify.setAccessToken(session?.accessToken)
 
       let newPlaylist: SpotifyApi.CreatePlaylistResponse
