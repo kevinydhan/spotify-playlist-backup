@@ -22,7 +22,7 @@ class PlaylistCard extends Component<PlaylistCardProps> {
 
     spotify.setAccessToken(accessToken)
 
-    const playlistTracks = []
+    const playlistTracks: SpotifyApi.PlaylistTrackObject[] = []
     let response = await spotify.getPlaylistTracks(id)
 
     playlistTracks.push(...response.body.items)

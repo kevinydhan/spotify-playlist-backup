@@ -4,9 +4,7 @@ export interface PlaylistCardProps extends SpotifyApi.PlaylistObjectSimplified {
   accessToken: string
 }
 
-export type GetPlaylistTrackUris = () => Promise<
-  SpotifyApi.PlaylistTrackObject[]
->
+export type GetPlaylistTrackUris = () => Promise<string[]>
 
 export type CreateBackupData = (
   uris: SpotifyPlaylistBackup['uris']

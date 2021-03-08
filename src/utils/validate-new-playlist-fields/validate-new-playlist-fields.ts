@@ -9,7 +9,7 @@ type ValidateNewPlaylistFields = (
 const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
   const publicFieldType = typeof body?.public
   const collaborativeFieldType = typeof body?.collaborative
-  const errors = []
+  const errors: ReturnType<ValidateNewPlaylistFields> = []
 
   if (!body?.name) {
     errors.push({
@@ -32,6 +32,13 @@ const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
     errors.push({
       field: 'collaborative',
       message: 'This field must either be true or false.',
+    })
+  }
+
+  if (!Array.isArray(body?.uris)) {
+    errors.push({
+      field: 'uris',
+      message: 'Uris field must be an array of uris.',
     })
   }
 
