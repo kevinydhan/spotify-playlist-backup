@@ -38,5 +38,3 @@ export type Modify<BaseType, PropertiesToModify> = Omit<
   keyof PropertiesToModify
 > &
   PropertiesToModify
-
-export type Extract<GenericType> = GenericType extends any ? any : unknown
