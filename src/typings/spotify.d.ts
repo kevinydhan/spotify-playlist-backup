@@ -6,3 +6,11 @@ export interface SpotifyPlaylistBackup {
   uris: SpotifyApi.PlaylistObjectSimplified['uri'][]
   createdAt: string
 }
+
+export interface AuthorizationCodeGrantResponse {
+  access_token: string
+  expires_in: number
+  refresh_token: string
+  scope: string
+  token_type: string
+}

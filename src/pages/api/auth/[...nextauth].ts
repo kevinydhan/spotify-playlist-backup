@@ -3,6 +3,7 @@ import WithAuth, { Callbacks, InitOptions, SessionBase } from 'next-auth'
 import Providers from 'next-auth/providers'
 
 import spotify from '@/controllers/spotify'
+import type { AuthorizationCodeGrantResponse } from '@/typings/spotify'
 
 export const createSession: Callbacks['session'] = async (
   session: SessionBase,
@@ -14,6 +15,15 @@ export const createSession: Callbacks['session'] = async (
   expires: user?.expiresIn,
 })
 
+interface NextAuthSpotifyOAuthAccount extends AuthorizationCodeGrantResponse {
+  provider: 'spotify'
+  type: 'oauth'
+  id: string
+  accessToken: string
+  accessTokenExpires: number | null
+  refreshToken: string
+  idToken?: string
+}
 /**
  * __Issues:__
  * - `callbacks.jwt()` and `callbacks.session()` were defined because the
@@ -48,26 +58,30 @@ const options: InitOptions = {
   },
 
   callbacks: {
-    jwt: async (token, user, account) => {
+    jwt: async (token, user, account: NextAuthSpotifyOAuthAccount) => {
       if (account) {
-        const expiryDate = Date.now() + account?.expires_in * 1000
-
+        /**
+         * This block triggers **only** when the user successfully signs in
+         * with Spotify OAuth.
+         */
+        const expiryDate = Date.now() + account.expires_in * 1000
         token.id = account?.id
         token.accessToken = account?.accessToken
         token.refreshToken = account?.refreshToken
         token.expiresIn = new Date(expiryDate).toISOString()
-      }
-
-      const isTokenExpired = Date.now() > new Date(token.expiresIn).getTime()
-
-      if (isTokenExpired) {
+      } else if (Date.now() > new Date(token.expiresIn).getTime()) {
+        /**
+         * This block triggers for users that are already signed in.
+         */
         spotify.setClientId(process.env.SPOTIFY_CLIENT_ID)
         spotify.setClientSecret(process.env.SPOTIFY_CLIENT_SECRET)
-        spotify.setAccessToken(account?.accessToken)
-        spotify.setRefreshToken(account?.refreshToken)
+        spotify.setAccessToken(token?.accessToken)
+        spotify.setRefreshToken(token?.refreshToken)
 
         const { body } = await spotify.refreshAccessToken()
+        const expiryDate = Date.now() + body.expires_in * 1000
         token.accessToken = body.access_token
+        token.expiresIn = new Date(expiryDate).toISOString()
       }
 
       return token
