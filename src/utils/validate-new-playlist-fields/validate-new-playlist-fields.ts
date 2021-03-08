@@ -7,6 +7,8 @@ type ValidateNewPlaylistFields = (
 ) => PlaylistValidationError[]
 
 const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
+  const publicFieldType = typeof body?.public
+  const collaborativeFieldType = typeof body?.collaborative
   const errors = []
 
   if (!body?.name) {
@@ -16,14 +18,17 @@ const validateNewPlaylistFields: ValidateNewPlaylistFields = (body) => {
     })
   }
 
-  if (typeof body?.public !== 'boolean') {
+  if (publicFieldType !== 'undefined' && publicFieldType !== 'boolean') {
     errors.push({
       field: 'public',
       message: 'This field must either be true or false.',
     })
   }
 
-  if (typeof body?.collaborative !== 'boolean') {
+  if (
+    collaborativeFieldType !== 'undefined' &&
+    collaborativeFieldType !== 'boolean'
+  ) {
     errors.push({
       field: 'collaborative',
       message: 'This field must either be true or false.',
